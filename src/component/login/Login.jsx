@@ -21,20 +21,22 @@ const Login = () => {
     }
   
     const submitHandler = () => {
-      // console.log(name, mail, password)
-      axios.post(url, { email, password })
-      .then(res => {
-          if (res.status === 200 || res.status === 201) {
-            
-              localStorage.setItem('token', res.data.token);
-              console.log(res.data); 
-              setToken(res.data.token)
-              navigate('/home')
-          } else {
-              console.log('Request failed with status:', res.status);
-          }
-      })
-  }
+    axios.post(url, { email, password })
+        .then(res => {
+            console.log("Login response:", res.data);
+
+            if (res.status === 200 || res.status === 201) {
+                localStorage.setItem('token', res.data.token);
+                setToken(res.data.token);
+                navigate('/home');
+            }
+        })
+        .catch(err => {
+            console.log("Login error:", err);
+            console.log("Server response:", err.response?.data);
+            alert(err.response?.data?.message || "Login failed. Check the browser console.");
+        });
+};
   
   
     return (

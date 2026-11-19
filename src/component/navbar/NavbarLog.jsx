@@ -1,4 +1,4 @@
-import Container from 'react-bootstrap/Container';
+/*import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
@@ -13,7 +13,7 @@ function NavbarLog() {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="m-auto">
                         <Nav.Link href="/">Home</Nav.Link>
-                        {/* <Nav.Link href="/fav">Favourites</Nav.Link> */}
+                        {/* <Nav.Link href="/fav">Favourites</Nav.Link> *//*}
                         <Nav.Link href="/cart">Cart</Nav.Link>
                        
                     </Nav>
@@ -21,6 +21,55 @@ function NavbarLog() {
                     <Button variant="light px-4" href='/login'>log out</Button>               
                     </Nav>
 
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    );
+}
+
+export default NavbarLog; */
+
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Button from 'react-bootstrap/Button';
+import { useNavigate, Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { productContext } from '../contextAPI/Context';
+
+function NavbarLog() {
+
+    const navigate = useNavigate();
+    const { setToken } = useContext(productContext);
+
+    const logoutHandler = () => {
+        localStorage.removeItem('token');
+        setToken('');
+        navigate('/login');
+    };
+
+    return (
+        <Navbar collapseOnSelect expand="lg" bg="dark" data-bs-theme="dark">
+            <Container>
+                <Navbar.Brand as={Link} to="/home">ShoeStop</Navbar.Brand>
+
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="m-auto">
+                        <Nav.Link as={Link} to="/home">Home</Nav.Link>
+                        <Nav.Link as={Link} to="/cart">Cart</Nav.Link>
+                    </Nav>
+
+                    <Nav className="mx-5">
+                        <Button
+                            variant="light"
+                            className="px-4"
+                            onClick={logoutHandler}
+                        >
+                            Logout
+                        </Button>
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
