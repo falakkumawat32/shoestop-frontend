@@ -3,10 +3,11 @@ import './fav.css'
 import { Button } from 'react-bootstrap'
 import { productContext } from '../contextAPI/Context'
 import axios from 'axios'
+import API_BASE_URL from '../../api';
 
 const Fav = () => {
 
-  const url = "http://localhost:5000/api/addfav"
+  const url = `${API_BASE_URL}/api/addfav`
 
   const { favProList,setFavProductList, token } = useContext(productContext)
 
@@ -17,7 +18,7 @@ const Fav = () => {
           Authorization: `Bearer ${token}`,
         };
         
-        const response = await axios.get('http://localhost:5000/api/addfav', { headers });
+        const response = await axios.get(url, { headers });
         setFavProductList(response.data);
       }
     } catch (error) {
@@ -46,7 +47,7 @@ const Fav = () => {
                 <p className="price text-dark">Rs:{li.price}</p>
 
                 <div className="Fbtns">
-                  <Button variant='danger'onClick={ ()=>{ removeFavItems() }} > Remove From Favoutie </Button>
+                  <Button variant='danger' onClick={() => removeFavItems(li._id)}> Remove From Favoutie </Button>
                 </div>
               </div>
 
